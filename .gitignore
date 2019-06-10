@@ -67,3 +67,5 @@ target/
 # IDE
 .idea
 .vscode
+.env
+archive.zip

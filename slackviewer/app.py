@@ -1,6 +1,10 @@
 import flask
 
-
+try:
+    from flask import _app_ctx_stack as stack
+except ImportError:
+    from flask import _request_ctx_stack as stack
+    
 app = flask.Flask(
     __name__,
     template_folder="templates",
@@ -10,11 +14,11 @@ app = flask.Flask(
 
 @app.route("/channel/<name>/")
 def channel_name(name):
-    messages = flask._app_ctx_stack.channels[name]
-    channels = list(flask._app_ctx_stack.channels.keys())
-    groups = list(flask._app_ctx_stack.groups.keys())
-    dm_users = list(flask._app_ctx_stack.dm_users)
-    mpim_users = list(flask._app_ctx_stack.mpim_users)
+    messages = stack.channels[name]
+    channels = list(stack.channels.keys())
+    groups = list(stack.groups.keys())
+    dm_users = list(stack.dm_users)
+    mpim_users = list(stack.mpim_users)
 
     return flask.render_template("viewer.html", messages=messages,
                                  name=name.format(name=name),
@@ -22,17 +26,17 @@ def channel_name(name):
                                  groups=sorted(groups),
                                  dm_users=dm_users,
                                  mpim_users=mpim_users,
-                                 no_sidebar=app.no_sidebar,
-                                 no_external_references=app.no_external_references)
+                                 no_sidebar=False,
+                                 no_external_references=False)
 
 
 @app.route("/group/<name>/")
 def group_name(name):
-    messages = flask._app_ctx_stack.groups[name]
-    channels = list(flask._app_ctx_stack.channels.keys())
-    groups = list(flask._app_ctx_stack.groups.keys())
-    dm_users = list(flask._app_ctx_stack.dm_users)
-    mpim_users = list(flask._app_ctx_stack.mpim_users)
+    messages = stack.groups[name]
+    channels = list(stack.channels.keys())
+    groups = list(stack.groups.keys())
+    dm_users = list(stack.dm_users)
+    mpim_users = list(stack.mpim_users)
 
     return flask.render_template("viewer.html", messages=messages,
                                  name=name.format(name=name),
@@ -40,17 +44,17 @@ def group_name(name):
                                  groups=sorted(groups),
                                  dm_users=dm_users,
                                  mpim_users=mpim_users,
-                                 no_sidebar=app.no_sidebar,
-                                 no_external_references=app.no_external_references)
+                                 no_sidebar=False,
+                                 no_external_references=False)
 
 
 @app.route("/dm/<id>/")
 def dm_id(id):
-    messages = flask._app_ctx_stack.dms[id]
-    channels = list(flask._app_ctx_stack.channels.keys())
-    groups = list(flask._app_ctx_stack.groups.keys())
-    dm_users = list(flask._app_ctx_stack.dm_users)
-    mpim_users = list(flask._app_ctx_stack.mpim_users)
+    messages = stack.dms[id]
+    channels = list(stack.channels.keys())
+    groups = list(stack.groups.keys())
+    dm_users = list(stack.dm_users)
+    mpim_users = list(stack.mpim_users)
 
     return flask.render_template("viewer.html", messages=messages,
                                  id=id.format(id=id),
@@ -58,17 +62,17 @@ def dm_id(id):
                                  groups=sorted(groups),
                                  dm_users=dm_users,
                                  mpim_users=mpim_users,
-                                 no_sidebar=app.no_sidebar,
-                                 no_external_references=app.no_external_references)
+                                 no_sidebar=False,
+                                 no_external_references=False)
 
 
 @app.route("/mpim/<name>/")
 def mpim_name(name):
-    messages = flask._app_ctx_stack.mpims[name]
-    channels = list(flask._app_ctx_stack.channels.keys())
-    groups = list(flask._app_ctx_stack.groups.keys())
-    dm_users = list(flask._app_ctx_stack.dm_users)
-    mpim_users = list(flask._app_ctx_stack.mpim_users)
+    messages = stack.mpims[name]
+    channels = list(stack.channels.keys())
+    groups = list(stack.groups.keys())
+    dm_users = list(stack.dm_users)
+    mpim_users = list(stack.mpim_users)
 
     return flask.render_template("viewer.html", messages=messages,
                                  name=name.format(name=name),
@@ -76,13 +80,13 @@ def mpim_name(name):
                                  groups=sorted(groups),
                                  dm_users=dm_users,
                                  mpim_users=mpim_users,
-                                 no_sidebar=app.no_sidebar,
-                                 no_external_references=app.no_external_references)
+                                 no_sidebar=False,
+                                 no_external_references=False)
 
 
 @app.route("/")
 def index():
-    channels = list(flask._app_ctx_stack.channels.keys())
+    channels = list(stack.channels.keys())
     if "general" in channels:
         return channel_name("general")
     else:
