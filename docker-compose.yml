@@ -1,9 +1,10 @@
 version: "3"
 services:
+
   uwsgi:
-    build: ./slackviewer
+    build: ./
     volumes:
-      - ./slackviewer:/var/www/
+      - ./:/var/www/
     ports:
       - "3031:3031"
     environment:
