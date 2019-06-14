@@ -22,7 +22,8 @@ stack.mpims = reader.compile_mpim_messages()
 stack.mpim_users = reader.compile_mpim_users()
 
 if __name__ == '__main__':
-    application.run(
-        host=os.environ.get("SEV_IP", '0.0.0.0'),
-        port=os.environ.get("SEV_PORT", 5000)
-    )
+    if not application.is_test:
+        application.run(
+            host=os.environ.get("SEV_IP", '0.0.0.0'),
+            port=os.environ.get("SEV_PORT", 5000)
+        )
