@@ -6,6 +6,8 @@ WORKDIR /var/www
 
 COPY requirements.txt ./
 
+COPY prod_env.sh ./
+
 RUN pip install -r ./requirements.txt
 
 RUN /bin/bash -c "source /var/www/prod_env.sh"
