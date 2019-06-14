@@ -9,6 +9,7 @@ install:
   - "pip install -r requirements.txt"
   - "pip install -r dev-requirements.txt"
 script:
+  - source ./env.sh
   - python slackviewer/main.py
   - python cli.py clean
   - python cli.py clean -w
