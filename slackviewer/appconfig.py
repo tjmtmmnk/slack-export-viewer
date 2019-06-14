@@ -12,7 +12,7 @@ def set_env_params():
     application.debug = _env_to_bool("FLASK_DEBUG")
     application.no_sidebar = _env_to_bool("SEV_NO_SIDEBAR")
     application.no_external_references = _env_to_bool("SEV_NO_EXTERNAL_REFERENCES")
-
+    application.is_test = _env_to_bool("SEV_TEST")
 
 def _env_to_bool(env, default_bool=False):
     env_str = os.environ.get(env)
