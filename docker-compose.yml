@@ -9,6 +9,7 @@ services:
       - "3031:3031"
     environment:
       TZ: "Asia/Tokyo"
+      SEV_ARCHIVE: "/var/www/slackviewer/archive.zip"
 
   nginx:
     build: ./nginx

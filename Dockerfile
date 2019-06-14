@@ -8,6 +8,6 @@ COPY requirements.txt ./
 
 RUN pip install -r ./requirements.txt
 
-CMD ["source", "env.sh"]
+RUN /bin/bash -c "source /var/www/prod_env.sh"
 
 CMD ["uwsgi","--ini","/var/www/uwsgi.ini"]
