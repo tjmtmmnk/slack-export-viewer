@@ -15,18 +15,20 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 dotenv_path = join(dirname(__file__), '.env')
-print(dotenv_path)
 load_dotenv(dotenv_path)
+
+application.debug = os.environ.get("FLASK_DEBUG", False)
+application.no_sidebar = os.environ.get("SEV_NO_SIDEBAR", False)
+application.no_external_references = os.environ.get("SEV_NO_EXTERNAL_REFERENCES", False)
 
 path = extract_archive(os.environ.get("SEV_ARCHIVE"))
 reader = Reader(path)
-stack.channels = reader.compile_channels(None)
+stack.channels = reader.compile_channels(os.environ.get("SEV_CHANNELS", None))
 stack.groups = reader.compile_groups()
 stack.dms = reader.compile_dm_messages()
 stack.dm_users = reader.compile_dm_users()
 stack.mpims = reader.compile_mpim_messages()
 stack.mpim_users = reader.compile_mpim_users()
-
 
 if __name__ == '__main__':
     application.run(
