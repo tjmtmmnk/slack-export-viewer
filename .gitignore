@@ -69,3 +69,4 @@ target/
 .vscode
 .env
 archive.zip
+auth.htpasswd
