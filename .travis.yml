@@ -1,4 +1,8 @@
 language: python
+env:
+  global:
+    SEV_ARCHIVE=tests/testarchive.zip
+    SEV_TEST=True
 python:
   - "2.7"
   - "3.6"
@@ -6,7 +10,8 @@ install:
   - "pip install -r requirements.txt"
   - "pip install -r dev-requirements.txt"
 script:
-  - python app.py -z tests/testarchive.zip --test
+  - source ./test_env.sh
+  - python slackviewer/main.py
   - python cli.py clean
   - python cli.py clean -w
   - python -m pytest tests
